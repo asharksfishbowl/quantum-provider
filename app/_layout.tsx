@@ -1,39 +1,45 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// app/_layout.tsx
+import { Stack, useSegments, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  const segments = useSegments();
+  const router = useRouter();
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    // Simulate checking existing token or session
+    setTimeout(() => {
+      // e.g. found no valid token
+      setIsCheckingAuth(false);
+    }, 1500);
+  }, []);
 
-  if (!loaded) {
-    return null;
+  useEffect(() => {
+    if (!isCheckingAuth) {
+      if (!isAuthenticated && segments[0] !== "(auth)") {
+        router.replace("/(auth)/login");
+      } else if (isAuthenticated && segments[0] === "(auth)") {
+        router.replace("/(tabs)/home");
+      }
+    }
+  }, [isAuthenticated, isCheckingAuth, segments]);
+
+  // Show a small loader or fallback while checking auth
+  if (isCheckingAuth) {
+    return (
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          <ActivityIndicator size="large" />
+        </View>
+    );
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+      <Stack screenOptions={{ headerShown: false }}>
+        {/* Your (auth) and (tabs) routes will load here */}
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
   );
 }
