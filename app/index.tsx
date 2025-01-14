@@ -1,18 +1,11 @@
-import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {View, Text, StyleSheet, Image} from "react-native";
 
 export default function Index() {
-    const router = useRouter();
-
-    // useEffect(() => {
-    //     // Maybe show a splash or loading screen here...
-    //     // Then navigate to the root route which triggers our auth check
-    //     router.replace("/");
-    // }, []);
 
     return (
         <View style={styles.container}>
+            <Image source={require('../assets/splash.png')} style={styles.headerImage}/>
             <Text style={styles.text}>Loading / Splash Screen</Text>
         </View>
     );
@@ -23,6 +16,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+    },
+    headerImage: {
+        width: 350,
+        height: 150,
+        resizeMode: "contain",
     },
     text: {
         fontSize: 18,
