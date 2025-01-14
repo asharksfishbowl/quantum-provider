@@ -1,6 +1,5 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import HeaderRight from "@/app/components/HeaderRight"; // or other icon library
 
 export default function TabsLayout() {
     return (
