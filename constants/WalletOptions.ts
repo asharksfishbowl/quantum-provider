@@ -8,7 +8,7 @@ export const WalletOptions = [
     {
         name: "MetaMask",
         scheme: "metamask://",
-        icon: require("../assets/images/metamask.png"), // adjust as needed
+        icon: require("../assets/images/metamask.png"),
     },
     {
         name: "Phantom",
@@ -16,7 +16,7 @@ export const WalletOptions = [
         icon: require("../assets/images/phantom.png"),
     },
     {
-        name: "Coinbase Wallet",
+        name: "Coinbase",
         scheme: "coinbase://",
         icon: require("../assets/images/coinbase.png"),
     },

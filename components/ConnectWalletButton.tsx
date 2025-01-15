@@ -1,15 +1,17 @@
 // app/components/ConnectWalletButton.tsx
 
-import React from "react";
+import React, { useState } from "react";
 import { TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useWalletConnectContext } from "@/contexts/WalletConnectContext";
+import SelectWalletModal from "@/components/SelectWalletModal";
 
 export default function ConnectWalletButton() {
     const { connectWallet, isConnected, session } = useWalletConnectContext();
+    const [isModalVisible, setModalVisible] = useState(false);
 
     const handlePress = async () => {
-        await connectWallet();
+        setModalVisible(true);
     };
 
     return (
@@ -19,6 +21,7 @@ export default function ConnectWalletButton() {
             ) : (
                 <Ionicons name="wallet-outline" size={24} color="#007AFF" />
             )}
+            <SelectWalletModal visible={isModalVisible} onClose={() => setModalVisible(false)} />
         </TouchableOpacity>
     );
 }
@@ -29,6 +32,5 @@ const styles = StyleSheet.create({
         padding: 12,
         backgroundColor: "#fff",
         borderRadius: 8,
-        // Optional: Add shadows or borders as needed
     },
 });

@@ -1,25 +1,18 @@
 // SelectWalletModal.tsx
 import React, { useState } from "react";
 import { Modal, View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {WalletOptions, WalletOptionType} from "@/constants/WalletOptions";
+import { connectWallet, openWalletApp } from "@/utils/WalletConnectUtils";
 
-export default function SelectWalletModal({ visible, onClose }) {
+export default function SelectWalletModal({ visible, onClose }: { visible: boolean; onClose: () => void }) {
     const [loading, setLoading] = useState(false);
 
-    async function handleWalletSelect(wallet) {
+    async function handleWalletSelect(wallet: WalletOptionType) {
         try {
             setLoading(true);
-
-            // 1) Start the WC connection
-            const { uri, approval } = await connectWallet("eip155:1");
-            // or "eip155:43114" for Avalanche, etc.
-
-            // 2) Immediately deep link to the chosen wallet
-            openWalletApp(wallet.scheme, uri);
-
-            // 3) Wait for user to approve in the wallet
-            const session = await approval;
-            console.log("Session approved!", session);
-            onClose(); // Close modal or navigate away
+            console.log("Connecting wallet:", wallet);
+            await connectWallet(wallet);
+            onClose();
         } catch (err) {
             console.error("Error connecting wallet:", err);
         } finally {
@@ -32,7 +25,7 @@ export default function SelectWalletModal({ visible, onClose }) {
             <View style={styles.overlay}>
                 <View style={styles.container}>
                     <Text style={styles.title}>Choose a Wallet</Text>
-                    {walletOptions.map((wallet) => (
+                    { WalletOptions.map((wallet: WalletOptionType) => (
                         <TouchableOpacity
                             key={wallet.name}
                             style={styles.walletItem}

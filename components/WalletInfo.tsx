@@ -6,17 +6,30 @@ import { useWalletConnectContext } from "@/contexts/WalletConnectContext";
 
 export default function WalletInfo() {
     const { isConnected, accounts } = useWalletConnectContext();
-
+debugger;
     if (!isConnected) {
         return null;
     }
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Connected Account:</Text>
-            <Text style={styles.address}>{accounts?.[0]}</Text>
-        </View>
-    );
+    if (accounts && accounts.length > 0) {
+        const info = accounts[0];
+        console.log(info);
+        return (
+            <View style={styles.container}>
+                <Text style={styles.label}>Connected Account:</Text>
+                <Text style={styles.address}>{info}</Text>
+            </View>
+        );
+    }
+    else {
+        const info = "No Account Connected"
+        console.log(info);
+        return (
+            <View style={styles.container}>
+                <Text style={styles.label}>No Account Connected</Text>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
