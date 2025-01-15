@@ -1,11 +1,13 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import HeaderRight from "@/components/HeaderRight";
 
 export default function TabsLayout() {
     return (
         <Tabs
             screenOptions={{
                 headerShown: true,
+                headerRight: () => <HeaderRight />,
             }}
         >
             <Tabs.Screen

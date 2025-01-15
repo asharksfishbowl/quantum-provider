@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { Stack, useSegments, useRouter } from "expo-router";
 import { useAuth } from "@/contexts/AuthContext";
+import { WalletConnectProvider } from "@/contexts/WalletConnectContext";
 
 export default function AuthChecker() {
     const { isAuthenticated } = useAuth();
@@ -36,8 +37,10 @@ export default function AuthChecker() {
     }
 
     return (
-        <Stack screenOptions={{ headerShown: false }}>
-            {/* The (auth) and (tabs) routes go here */}
-        </Stack>
+        <WalletConnectProvider>
+            <Stack screenOptions={{ headerShown: false }}>
+                {/* The (auth) and (tabs) routes go here */}
+            </Stack>
+        </WalletConnectProvider>
     );
 }
