@@ -8,6 +8,10 @@ export default function TabsLayout() {
             screenOptions={{
                 headerShown: true,
                 headerRight: () => <HeaderRight />,
+                headerStyle: {
+                    backgroundColor: "#74acef",
+
+                },
             }}
         >
             <Tabs.Screen
