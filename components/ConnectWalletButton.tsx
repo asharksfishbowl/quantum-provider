@@ -7,7 +7,7 @@ import { useWalletConnectContext } from "@/contexts/WalletConnectContext";
 import SelectWalletModal from "@/components/SelectWalletModal";
 
 export default function ConnectWalletButton() {
-    const { connectWallet, isConnected, session } = useWalletConnectContext();
+    const {isConnected} = useWalletConnectContext();
     const [isModalVisible, setModalVisible] = useState(false);
 
     const handlePress = async () => {

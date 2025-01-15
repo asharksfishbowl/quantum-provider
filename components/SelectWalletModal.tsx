@@ -20,6 +20,18 @@ export default function SelectWalletModal({ visible, onClose }: { visible: boole
         }
     }
 
+    async function onQuatumWallet() {
+        try {
+            setLoading(true);
+            console.log("Connecting wallet: Quantum App Wallet");
+            onClose();
+        } catch (err) {
+            console.error("Error connecting wallet:", err);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <Modal visible={visible} animationType="slide" onRequestClose={onClose} transparent>
             <View style={styles.overlay}>
@@ -33,9 +45,12 @@ export default function SelectWalletModal({ visible, onClose }: { visible: boole
                             disabled={loading}
                         >
                             <Image source={wallet.icon} style={styles.walletIcon} />
-                            <Text style={styles.walletName}>{wallet.name}</Text>
+                            {/*<Text style={styles.walletName}>{wallet.name}</Text>*/}
                         </TouchableOpacity>
                     ))}
+                    <TouchableOpacity onPress={onQuatumWallet} style={styles.quantumButton}>
+                        <Image source={require('../assets/splash.png')} style={styles.walletIcon} />
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                         <Text style={{ color: "#fff" }}>Cancel</Text>
                     </TouchableOpacity>
@@ -66,19 +81,22 @@ const styles = StyleSheet.create({
     walletItem: {
         flexDirection: "row",
         alignItems: "center",
-        padding: 12,
-        borderWidth: 1,
-        borderColor: "#ccc",
         borderRadius: 8,
-        marginBottom: 12,
+        marginBottom: 16,
     },
     walletIcon: {
-        width: 32,
-        height: 32,
-        marginRight: 12,
+        width: '100%',
+        height: 64,
     },
     walletName: {
         fontSize: 16,
+    },
+    quantumButton: {
+        marginTop: 12,
+        backgroundColor: "#ffffff",
+        padding: 12,
+        borderRadius: 8,
+        alignItems: "center",
     },
     closeButton: {
         marginTop: 12,

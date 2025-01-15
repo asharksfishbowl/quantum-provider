@@ -6,7 +6,7 @@ import { useWalletConnectContext } from "@/contexts/WalletConnectContext";
 
 export default function WalletInfo() {
     const { isConnected, accounts } = useWalletConnectContext();
-debugger;
+
     if (!isConnected) {
         return null;
     }
